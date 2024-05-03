@@ -59,4 +59,12 @@
       >
     </footer>
   </body>
+
+  <script>
+    const installBtn = document.createElement('button');
+    installBtn.addEventListener('click', function () {
+      deferredPrompt.prompt();
+      deferredPrompt = null;
+    });
+  </script>
 </html>
