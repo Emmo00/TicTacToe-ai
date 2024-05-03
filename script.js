@@ -1,6 +1,10 @@
 const X_CLASS = 'x';
 const O_CLASS = 'o';
-let xTurn;
+let i = 0;
+let xTurn = false;
+let xFirst = false;
+let game = new Game();
+let ai = new AI();
 const WINNING_COMBINATIONS = [
   [0, 1, 2],
   [3, 4, 5],
@@ -18,13 +22,17 @@ const winningMessageTextElement = document.querySelector(
   '[data-winning-message-text]'
 );
 const restartButton = document.getElementById('restart-button');
+const xScoreElement = document.getElementById('x-score');
+const drawScoreElement = document.getElementById('draw-score');
+const oScoreElement = document.getElementById('o-score');
+const cells = [...cellElements];
 
 startGame();
 restartButton.addEventListener('click', startGame);
 
 function startGame() {
-  xTurn = true;
   setBoardHoverClass();
+  updateScores({});
 
   // in case of restarting the game, we have to UNSET everything
   winningMessageElement.classList.remove('show');
@@ -37,6 +45,11 @@ function startGame() {
   cellElements.forEach((cell) => {
     cell.addEventListener('click', handleClick, { once: true });
   });
+  game = new Game();
+  if (!xTurn) {
+    game.nextRound();
+    aiPlay();
+  }
 }
 
 function handleClick(e) {
@@ -45,22 +58,59 @@ function handleClick(e) {
   placeMark(cell);
   // Check for Win
   if (checkWin()) {
+    const currentClass = xTurn ? X_CLASS : O_CLASS;
+    updateScores({[currentClass]: 1})
     endGame(false);
+    cell.ai = false;
   }
   // Check for Draw
   else if (isDraw()) {
+    updateScores({draw: 1})
     endGame(true);
+    cell.ai = false;
   }
   // Switch Turns
   else {
     swapTurns();
     setBoardHoverClass();
+    game.nextRound();
+    if (!cell.ai) {
+      cell.ai = false;
+      console.log(
+        game.board,
+        '------i play-------',
+        i++,
+        `xTurn: ${xTurn} xFirst: ${xFirst}`,
+        cell,
+        cell.ai
+      );
+      aiPlay();
+    } else {
+      cell.ai = false;
+      console.log(
+        game.board,
+        '--------ai play------',
+        i++,
+        `xTurn: ${xTurn} xFirst: ${xFirst}`,
+        cell,
+        cell.ai
+      );
+    }
+    console.log('end of cell handle --------------------');
   }
 }
 
 function placeMark(cell) {
   const currentClass = xTurn ? X_CLASS : O_CLASS;
   cell.classList.add(currentClass);
+
+  // update game object
+  const cellIndex = cells.findIndex((e) => e === cell);
+  const action = {
+    player: currentClass,
+    position: [cellIndex % 3, Math.floor(cellIndex / 3)],
+  };
+  game.makeMove(action);
 }
 
 function swapTurns() {
@@ -99,5 +149,39 @@ function endGame(draw) {
   } else {
     winningMessageTextElement.innerText = `${xTurn ? "X's" : "O's"} Wins!`;
   }
-  winningMessageElement.classList.add('show');
+  setTimeout(() => {
+    winningMessageElement.classList.add('show');
+  }, 450);
+  xFirst = !xFirst;
+  xTurn = xFirst;
+}
+
+function aiPlay() {
+  console.log('call ai');
+  const action = ai.play(game);
+  game.makeMove(action);
+
+  const { position } = action;
+  linearIndex = 3 * position[1] + position[0];
+  const aiChoice = cells[linearIndex];
+  aiChoice.ai = true;
+  aiChoice.click();
+}
+
+function updateScores({ x = 0, draw = 0, o = 0 }) {
+  let xScore = +localStorage.getItem('xScore') ?? 0;
+  let drawScore = +localStorage.getItem('drawScore') ?? 0;
+  let oScore = +localStorage.getItem('oScore') ?? 0;
+
+  xScore += x;
+  drawScore += draw;
+  oScore += o;
+
+  localStorage.setItem('xScore', xScore);
+  localStorage.setItem('drawScore', drawScore);
+  localStorage.setItem('oScore', oScore);
+
+  xScoreElement.innerHTML = xScore;
+  drawScoreElement.innerHTML = drawScore;
+  oScoreElement.innerHTML = oScore;
 }

@@ -1,5 +1,5 @@
 class Game {
-  nbRounds = 1;
+  xFirst = true;
   board;
 
   constructor(board = null) {
@@ -28,7 +28,7 @@ class Game {
     }, 0);
     // if round is odd, x goes first, else o
     let order = ['x', 'o'];
-    if (this.nbRounds % 2 == 1) order = ['o', 'x'];
+    if (this.xFirst) order = ['o', 'x'];
     return order[Number(nbX === nbO)];
   }
 
@@ -122,7 +122,7 @@ class Game {
   }
 
   nextRound() {
-    this.nbRounds++;
+    this.xFirst = !this.xFirst;
     return this;
   }
 
@@ -194,8 +194,3 @@ class AI {
     return c_array;
   }
 }
-
-module.exports = {
-  Game,
-  AI,
-};

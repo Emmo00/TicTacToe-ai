@@ -9,11 +9,12 @@
 
 body {
     margin: 0;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .board {
     width: 100vw;
-    height: 100vh;
+    height: 70vh;
     display: grid;
     justify-content: center;
     align-content: center;
@@ -168,4 +169,40 @@ body {
 /*  The message only shows up if we add the .show class to the element  */
 .winning-message.show {
     display: flex;
+}
+.stats {
+    display: flex;
+    height: 15vh;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+table {
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    max-width: 440px;
+}
+
+td, th {
+    border: 2px solid black;
+    text-align: center;
+    padding: 4px;
+    width: 33%;
+}
+
+.clear-button {
+    text-align: center;
+    background-color: black;
+    border: none;
+    border-radius: 2px;
+    padding: 6px;
+    color: rgb(241, 77, 77);
+}
+
+footer {
+    height: 10vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
