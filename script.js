@@ -154,7 +154,7 @@ function endGame(draw) {
   if (draw) {
     winningMessageTextElement.innerText = 'Draw!';
   } else {
-    winningMessageTextElement.innerText = `${xTurn ? "X's" : "O's"} Wins!`;
+    winningMessageTextElement.innerText = `${xTurn ? "X" : "O"} Wins!`;
   }
   setTimeout(() => {
     winningMessageElement.classList.add('show');
