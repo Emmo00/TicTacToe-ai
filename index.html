@@ -1,49 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>TicTacToe</title>
-        <meta name="description" content="Simple Tic Tac Toe Game">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style.css">
-        <script src="game.js"></script>
-        <script src="script.js" defer></script>
-    </head>
-    <body>
-        <div class="board" id="board">
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-            <div class="cell" data-cell></div>
-        </div>
-        <br>
-        <div class="stats">
-            <table>
-                <tr>
-                    <th>X(you)</th>
-                    <th>Draw</th>
-                    <th>O(computer)</th>
-                </tr>
-                <tr>
-                    <td id="x-score">0</td>
-                    <td id="draw-score">0</td>
-                    <td id="o-score">0</td>
-                </tr>
-            </table>
-            <button class="clear-button" id="clear-button">Clear Data</button>
-        </div>
-        <div class="winning-message" id="winning-message">
-            <div data-winning-message-text>X wins!</div>
-            <button id="restart-button">Restart</button>
-        </div>
-        <footer>
-            AI by <a href="http://x.com/emma_nwafor1" target="_blank" rel="noopener noreferrer">&ThickSpace;Emmanuel</a>
-        </footer>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>TicTacToe</title>
+    <link rel="shortcut icon" href="icon512_rounded.png" type="image/x-icon" />
+    <meta name="description" content="Simple Tic Tac Toe Game" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="manifest" href="manifest.json" />
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./sw.js');
+      }
+    </script>
+    <script src="game.js"></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="board" id="board">
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+      <div class="cell" data-cell></div>
+    </div>
+    <br />
+    <div class="stats">
+      <table>
+        <tr>
+          <th>X(you)</th>
+          <th>Draw</th>
+          <th>O(computer)</th>
+        </tr>
+        <tr>
+          <td id="x-score">0</td>
+          <td id="draw-score">0</td>
+          <td id="o-score">0</td>
+        </tr>
+      </table>
+      <button class="clear-button" id="clear-button">Clear Data</button>
+    </div>
+    <div class="winning-message" id="winning-message">
+      <div data-winning-message-text>X wins!</div>
+      <button id="restart-button">Restart</button>
+    </div>
+    <footer>
+      AI by
+      <a
+        href="http://x.com/emma_nwafor1"
+        target="_blank"
+        rel="noopener noreferrer"
+        >&ThickSpace;Emmanuel</a
+      >
+    </footer>
+  </body>
 </html>

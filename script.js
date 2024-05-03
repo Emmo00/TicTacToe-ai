@@ -1,8 +1,8 @@
 const X_CLASS = 'x';
 const O_CLASS = 'o';
 let i = 0;
-let xTurn = false;
-let xFirst = false;
+let xTurn = true;
+let xFirst = true;
 let game = new Game();
 let ai = new AI();
 const WINNING_COMBINATIONS = [
