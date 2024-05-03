@@ -25,6 +25,13 @@ const restartButton = document.getElementById('restart-button');
 const xScoreElement = document.getElementById('x-score');
 const drawScoreElement = document.getElementById('draw-score');
 const oScoreElement = document.getElementById('o-score');
+document.getElementById('clear-button').addEventListener('click', function () {
+  localStorage.setItem('xScore', 0);
+  localStorage.setItem('drawScore', 0);
+  localStorage.setItem('oScore', 0);
+
+  updateScores({});
+});
 const cells = [...cellElements];
 
 startGame();
@@ -59,13 +66,13 @@ function handleClick(e) {
   // Check for Win
   if (checkWin()) {
     const currentClass = xTurn ? X_CLASS : O_CLASS;
-    updateScores({[currentClass]: 1})
+    updateScores({ [currentClass]: 1 });
     endGame(false);
     cell.ai = false;
   }
   // Check for Draw
   else if (isDraw()) {
-    updateScores({draw: 1})
+    updateScores({ draw: 1 });
     endGame(true);
     cell.ai = false;
   }
