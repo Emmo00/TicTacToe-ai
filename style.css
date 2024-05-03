@@ -1,0 +1,171 @@
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+:root {
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size) * 0.85);
+}
+
+body {
+    margin: 0;
+}
+
+.board {
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto);
+}
+
+.cell {
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Removing borders from outer cells */
+.cell:first-child,
+.cell:nth-child(2),
+.cell:nth-child(3) {
+    border-top: none;
+}
+.cell:nth-child(3n + 1) {
+    border-left: none;
+}
+.cell:nth-child(3n + 3) {
+    border-right: none;
+}
+.cell:last-child,
+.cell:nth-child(8),
+.cell:nth-child(7) {
+    border-bottom: none;
+}
+
+/* Removing pointer from filled cells */
+.cell.x, 
+.cell.o {
+    cursor: not-allowed;
+}
+
+/* X in the cells */
+.cell.x::before,
+.cell.x::after {
+    content: '';
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+    background-color: black;
+    position: absolute;
+}
+
+.cell.x::before {
+    transform: rotate(45deg);
+}
+
+.cell.x::after {
+    transform: rotate(-45deg);
+}
+
+/* O in the cells */
+.cell.o::before,
+.cell.o::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.cell.o::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+    background-color: black;
+}
+
+.cell.o::after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: white;
+}
+
+/*  Hover Effect for X's turn
+    .cell:not(x):not(o) -> It should only occur in cells that are not already filled  */
+.board.x .cell:not(.x):not(.o):hover::before,
+.board.x .cell:not(.x):not(.o):hover::after {
+    content: '';
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+    background-color: lightgrey;
+    position: absolute;
+}
+
+.board.x .cell:not(.x):not(.o):hover::before {
+    transform: rotate(45deg);
+}
+
+.board.x .cell:not(.x):not(.o):hover::after {
+    transform: rotate(-45deg);
+}
+
+/*  Hover Effect for O's turn  */
+.board.o .cell:not(.x):not(.o):hover::before,
+.board.o .cell:not(.x):not(.o):hover::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+}
+
+.board.o .cell:not(.x):not(.o):hover::before {
+    width: var(--mark-size);
+    height: var(--mark-size);
+    background-color: lightgrey;
+}
+
+.board.o .cell:not(.x):not(.o):hover::after {
+    width: calc(var(--mark-size) * .7);
+    height: calc(var(--mark-size) * .7);
+    background-color: white;
+}
+
+/*  WINNING MESSAGE  */
+.winning-message {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.9);
+    color: white;
+    font-size: 5rem;
+}
+
+.winning-message button {
+    font-size: 2rem;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: .5rem;
+    padding: .25em .5em;
+    cursor: pointer;
+}
+
+.winning-message button:hover {
+    background-color: black;
+    color: white;
+    border-color: white;
+}
+
+/*  The message only shows up if we add the .show class to the element  */
+.winning-message.show {
+    display: flex;
+}
